@@ -1,0 +1,38 @@
+// OpenClaw config.json5 — Resend inbound email webhook
+//
+// Merge this hooks block into your existing config.json5.
+// Generate a token: openssl rand -base64 32
+//
+// Required environment variables:
+//   RESEND_API_KEY          – Resend API key for fetching email body/attachments
+//   CLAWDBOT_HOOK_TOKEN     – same value as hooks.token below (or set inline)
+//
+// Optional:
+//   RESEND_WEBHOOK_SECRET   – Svix signing secret from Resend dashboard
+//                             (enables webhook signature verification)
+
+{
+  hooks: {
+    enabled: true,
+    token: "CHANGE_ME",                  // or use env: "${CLAWDBOT_HOOK_TOKEN}"
+    path: "/hooks",
+
+    // Point to this skill's directory so the transform module resolves
+    transformsDir: "/path/to/skills/resend-webhook",
+
+    mappings: [
+      {
+        name: "resend",
+        match: { path: "/resend", method: "POST" },
+        action: "agent",
+        transform: {
+          module: "./resend-transform.js",
+          export: "transformResendWebhook",
+        },
+        // Set to false so the agent processes silently;
+        // set to true if you want results forwarded to a chat channel.
+        deliver: false,
+      },
+    ],
+  },
+}
