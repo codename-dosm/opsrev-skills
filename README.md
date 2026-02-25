@@ -4,22 +4,10 @@ Local staging area for publishable OpenClaw skills and hooks.
 
 ### Structure
 
-```
-global/                          # Shared across all orgs
-  hooks/                         # Global webhook transforms (empty for now)
-  skills/                        # Global skills
-    weather/
-    github/
-    summarize/
-    notion/
-
-orgs/                            # Per-org customisations
-  valentine-roofing/
-    hooks/
-      resend-webhook/            # D4$ CSV ingest via Resend email.received
-    skills/
-      smart-scout/               # Process D4$ records → CRM, mailer, Apollo
-```
+- `weather`
+- `github`
+- `summarize`
+- `apollo-outreach`
 
 ### Conventions
 
