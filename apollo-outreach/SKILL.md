@@ -238,6 +238,7 @@ Body:
   "contact_ids": ["contact_id_1", "contact_id_2"],
   "emailer_campaign_id": "sequence_id",
   "send_email_from_email_account_id": "mailbox_id",
+  "userId": "apollo_user_id",
   "sequence_no_email": false,
   "sequence_active_in_other_campaigns": false,
   "sequence_finished_in_other_campaigns": false
@@ -248,6 +249,7 @@ Key parameters:
 - `contact_ids` (required) - Array of contact IDs to add
 - `emailer_campaign_id` (required) - The sequence ID
 - `send_email_from_email_account_id` - Mailbox to send from (get IDs from Email Accounts endpoint)
+- `userId` - The Apollo user ID of the person adding contacts
 - `sequence_no_email` - Add contacts even if they lack an email
 - `sequence_active_in_other_campaigns` - Add even if active in another sequence
 - `sequence_finished_in_other_campaigns` - Add even if finished another sequence
@@ -297,16 +299,19 @@ No parameters required. Returns IDs and metadata for all linked email inboxes. U
 ## Search Outreach Emails
 
 ```
-POST /emailer_campaigns/{emailer_campaign_id}/emailer_touches/search
+POST /emailer_messages/search
 ```
 
 Body:
 ```json
 {
+  "emailer_campaign_id": "sequence_id",
   "per_page": 25,
   "page": 1
 }
 ```
+
+Filter by `emailer_campaign_id` to scope results to a specific sequence.
 
 Display limit: 50,000 records (100 per page, up to 500 pages).
 
