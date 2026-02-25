@@ -1,22 +1,42 @@
-## OpsRev Skills Repo (for cloning to GitHub)
+## OpsRev Skills Repo
 
-This folder is a local staging area for publishable OpenClaw skill repos.
+Local staging area for publishable OpenClaw skills and hooks.
 
-Each immediate child folder is a skill repository:
+### Structure
 
-- `weather`
-- `github`
-- `summarize`
+```
+global/                          # Shared across all orgs
+  hooks/                         # Global webhook transforms (empty for now)
+  skills/                        # Global skills
+    weather/
+    github/
+    summarize/
+    notion/
 
-These were copied directly from ClawHub public skill packages:
-
-```text
-https://clawhub.ai/skills?sort=downloads&nonSuspicious=true
+orgs/                            # Per-org customisations
+  valentine-roofing/
+    hooks/
+      resend-webhook/            # D4$ CSV ingest via Resend email.received
+    skills/
+      smart-scout/               # Process D4$ records → CRM, mailer, Apollo
 ```
 
-You can publish these as separate repos under `opsrev/opsrev-skills` (or another shared org/repo namespace) to match:
+### Conventions
 
-- `https://github.com/{org}/{slug}.git`
-- e.g. `https://github.com/opsrev/opsrev-skills/weather.git`
+- **`global/skills/`** — Skills available to every org/tenant.
+- **`global/hooks/`** — Webhook transforms available to every org/tenant.
+- **`orgs/{org-slug}/skills/`** — Skills scoped to a single org.
+- **`orgs/{org-slug}/hooks/`** — Webhook transforms scoped to a single org.
 
-Keep this folder in sync with the exact versions you want to install from OpenClaw via `SKILL_SOURCE=github`.
+Each skill or hook folder contains at minimum a `SKILL.md` and `_meta.json`.
+Hooks also include a JS/TS transform module and a `config-example.json5`.
+
+### Publishing
+
+These can be published as separate repos under `opsrev/opsrev-skills` to match:
+
+```
+https://github.com/{org}/{slug}.git
+```
+
+Keep this folder in sync with the exact versions installed via `SKILL_SOURCE=github`.
