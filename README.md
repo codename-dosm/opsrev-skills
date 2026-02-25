@@ -7,6 +7,7 @@ Each immediate child folder is a skill repository:
 - `weather`
 - `github`
 - `summarize`
+- `apollo-outreach`
 
 These were copied directly from ClawHub public skill packages:
 
