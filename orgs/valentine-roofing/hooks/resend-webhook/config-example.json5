@@ -1,0 +1,35 @@
+// OpenClaw config.json5 — Valentine Roofing D4$ Resend webhook
+//
+// Merge this hooks block into your existing config.json5.
+// Generate a token: openssl rand -base64 32
+//
+// Required environment variables:
+//   RESEND_API_KEY          – for downloading CSV attachments
+//   CLAWDBOT_HOOK_TOKEN     – same value as hooks.token below
+//
+// Optional:
+//   RESEND_WEBHOOK_SECRET   – Svix signing secret (enables signature verification)
+
+{
+  hooks: {
+    enabled: true,
+    token: "${CLAWDBOT_HOOK_TOKEN}",
+    path: "/hooks",
+
+    // Point to this hook's directory so the transform module resolves
+    transformsDir: "/path/to/orgs/valentine-roofing/hooks/resend-webhook",
+
+    mappings: [
+      {
+        name: "resend-d4s",
+        match: { path: "/resend-d4s", method: "POST" },
+        action: "agent",
+        transform: {
+          module: "./resend-transform.js",
+          export: "transformResendWebhook",
+        },
+        deliver: false,
+      },
+    ],
+  },
+}
